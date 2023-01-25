@@ -15,10 +15,10 @@
 using namespace std;
 
 
-void display_settingscreen(int numofrows, int numofcolumns)
+void display_settingscreen(int numofrows, int numofcolumns, int numofzombies)
 {
     a:
-    cout << "number of rows : ";
+    cout << "Number of rows : ";
     cin >> numofrows;
     if (numofrows < 1 || numofrows > 10)
     {
@@ -27,12 +27,21 @@ void display_settingscreen(int numofrows, int numofcolumns)
     }
 
     b:
-    cout << "number of columns : ";
+    cout << "Number of columns : ";
     cin >> numofcolumns;
     if (numofcolumns < 1 || numofcolumns > 10)
     {
         cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
         goto b;
+    }
+
+    c:
+    cout << "Number of zombies";
+    cin >> numofzombies;
+    if (numofzombies < 1 || numofzombies > 10)
+    {
+        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        goto c;
     }
 
 }
@@ -44,5 +53,6 @@ int main()
 
     int numofrows = 1;
     int numofcolumns = 1;
-    display_settingscreen(numofrows,numofcolumns);
+    int numofzombies = 1;
+    display_settingscreen(numofrows,numofcolumns,numofzombies);
 }
