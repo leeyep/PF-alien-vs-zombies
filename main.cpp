@@ -2,21 +2,47 @@
 // Course: TCP1101 PROGRAMMING FUNDAMENTALS 
 // Year: Trimester 1, 2022/23 (T2215) 
 // Lab: TxxL 
-// Names: MEMBER_NAME_1 | MEMBER_NAME_2 | MEMBER_NAME_3 
-// IDs: MEMBER_ID_1 | MEMBER_ID_2 | MEMBER_ID_3 
-// Emails: MEMBER_EMAIL_1 | MEMBER_EMAIL_2 | MEMBER_EMAIL_3 
-// Phones: MEMBER_PHONE_1 | MEMBER_PHONE_2 | MEMBER_PHONE_3 
+// Names: LEE_HENG_YEP | ONG_KWANG_ZHENG
+// IDs: 1211101790| MEMBER_ID_2
+// Emails: 1211101790@student.mmu.edu.my | MEMBER_EMAIL_2
+// Phones: MEMBER_PHONE_1 | MEMBER_PHONE_2
 // ********************************************************* 
 
 // TODO: Fill in the missing information above and delete this line.
 
-#include "pf/helper.h"
+#include "pf/helper.cpp"
 #include <iostream>
 using namespace std;
 
+
+void display_settingscreen(int numofrows, int numofcolumns)
+{
+    a:
+    cout << "number of rows : ";
+    cin >> numofrows;
+    if (numofrows < 1 || numofrows > 10)
+    {
+        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        goto a;
+    }
+
+    b:
+    cout << "number of columns : ";
+    cin >> numofcolumns;
+    if (numofcolumns < 1 || numofcolumns > 10)
+    {
+        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        goto b;
+    }
+
+}
 int main()
 {
-    cout << "Assignment (Part 1)" << endl;
+    cout << "Alien vs Zombies" << endl;
     cout << "Let's Get Started!" << endl;
     pf::Pause();
+
+    int numofrows = 1;
+    int numofcolumns = 1;
+    display_settingscreen(numofrows,numofcolumns);
 }
