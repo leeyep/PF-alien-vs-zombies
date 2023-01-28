@@ -3,56 +3,133 @@
 // Year: Trimester 1, 2022/23 (T2215) 
 // Lab: TxxL 
 // Names: LEE_HENG_YEP | ONG_KWANG_ZHENG
-// IDs: 1211101790| MEMBER_ID_2
-// Emails: 1211101790@student.mmu.edu.my | MEMBER_EMAIL_2
-// Phones: MEMBER_PHONE_1 | MEMBER_PHONE_2
+// IDs: 1211101790| 1211102806
+// Emails: 1211101790@student.mmu.edu.my | 1211102806@student.mmu.edu.my
+// Phones: MEMBER_PHONE_1 | 017-368-4493
 // ********************************************************* 
 
-// TODO: Fill in the missing information above and delete this line.
 
-#include "pf/helper.cpp"
+#include "pf/helper.h"
 #include <iostream>
 using namespace std;
 
+// void Gamesetting(int &selection)
+//{
+//    cout << "Your Selection is =";
+//    int temp;
+//    cin >> temp;
+//
+//    const int Numberofrows = 3;
+//    const int NumberofColumns = 5;
+//    const int NumberofZombies = 1;
+//    int Numbofrows;
+//    int NumbofColumns;
+//    int NumbofZombies;
+//    if (temp == 1)
+//        ;
+//    cout << "Numbers of rows:(#only odd numbers)" << endl;
+//    cin >> Numbofrows;
+//    cout << "Number of columns: " << endl;
+//    cin >> NumbofColumns;
+//    cout << "Number of Zombies" << endl;
+//    cin >> NumbofZombies;
 
-void display_settingscreen(int numofrows, int numofcolumns, int numofzombies)
+//   if (temp == 2)
+//    cout << "Number of rows: " << Numberofrows << endl;
+//    cout << "Number of Columns:" << NumberofColumns << endl;
+//    cout << "Number of Zombies:" << NumberofZombies << endl;
+//} <-----------------------------------------------------------------------(DONT DELETE YET NOT CONFIRMED)
+int ClearScreen()
 {
-    a:
-    cout << "Number of rows : ";
-    cin >> numofrows;
-    if (numofrows < 1 || numofrows > 10)
+#if defined(_WIN32)
+    return std::system("cls");
+#elif defined(__linux__) || defined(__APPLE__)
+    return std::system("clear");
+#endif
+}
+int Pause()
     {
-        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
-        goto a;
+        #if defined(_WIN32)
+            return std::system("pause");
+        #elif defined(__linux__) || defined(__APPLE__)
+            return std::system(R"(read -p "Press any key to continue . . . " dummy)");
+        #endif
     }
-
-    b:
-    cout << "Number of columns : ";
-    cin >> numofcolumns;
-    if (numofcolumns < 1 || numofcolumns > 10)
+int row;
+int column;
+char board[15][15];
+void Createboard(int row, int column)
+{
+    for (int rows = 0; rows < row; rows++)
     {
-        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
-        goto b;
+        for (int columns = 0; columns < column; columns++)
+        {
+            if (rows % 2 == 0 && columns % 2 == 0)
+            {
+                board[rows][columns] = '+';
+            }
+            else if (rows % 2 == 0)
+            {
+                board[rows][columns] = '-';
+            }
+            else if (columns % 2 == 0)
+            {
+                board[rows][columns] = '|';
+            }
+            else
+            {
+                board[rows][columns] = ' ';
+            }
+        }
     }
-
-    c:
-    cout << "Number of zombies";
-    cin >> numofzombies;
-    if (numofzombies < 1 || numofzombies > 10)
+}
+void printBoard(int row, int column)
+{
+    for (int rows = 0; rows < row; rows++)
     {
-        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
-        goto c;
+        for (int columns = 0; columns < column; columns++)
+        {
+            if (rows % 2 == 0 && columns % 2 == 0)
+            {
+                std::cout << "+";
+            }
+            else if (rows % 2 == 0)
+            {
+                std::cout << "-";   
+            }
+            else if (columns % 2 == 0)
+            {
+                std::cout << "|";
+                if (columns == column - 1)
+                    std::cout << " ";
+            }
+            else
+            {
+                if (rows == 0)
+                {
+                    std::cout << "  ";
+                }
+            }
+        }
+        cout << endl;
     }
-
 }
 int main()
 {
-    cout << "Alien vs Zombies" << endl;
-    cout << "Let's Get Started!" << endl;
-    pf::Pause();
+    int Numbofrows;
+    int NumbofColumns;
+    int NumbofZombies;
+    cout << "Numbers of rows:(#only odd numbers)" << endl;
+    cin >> Numbofrows;
+    cout << "Number of columns: " << endl;
+    cin >> NumbofColumns;
+    cout << "Number of Zombies" << endl;
+    cin >> NumbofZombies;
 
-    int numofrows = 1;
-    int numofcolumns = 1;
-    int numofzombies = 1;
-    display_settingscreen(numofrows,numofcolumns,numofzombies);
+    cout << "Number of rows=" << Numbofrows << endl;
+    cout << "Number of Columns=" << NumbofColumns << endl;
+    cout << "Number of Zombies=" << NumbofZombies << endl;
+    cout << "Game setting has been updated"<< endl;
+    Createboard(Numbofrows, NumbofColumns);
+    printBoard(Numbofrows,NumbofColumns);
 }
