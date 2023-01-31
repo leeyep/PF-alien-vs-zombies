@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+[Video Demo](https://www.youtube.com/watch?v=h8lKRvB-MQU).
 
 ## Minimum Requirements
 
@@ -32,8 +32,6 @@ Describe the additional features that has been implemented.
 
 List down the contribution of each group members.
 
-For example:
-
 ### Ong Kwang Zheng
 
 1. Generate gameboard with input value by users
@@ -43,6 +41,7 @@ For example:
 ### Lee Heng Yep
 
 1. Getting Input Value from the users
+2. Creating part 1 video
 
 ## Problems Encountered & Solutions
 
