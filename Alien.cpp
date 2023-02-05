@@ -3,7 +3,7 @@
 using namespace std;
 
 struct Alien
-{
+{   
     int AlienLife = 100;
     int AlienAttack = 0;
 };
