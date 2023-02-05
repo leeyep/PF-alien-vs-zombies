@@ -31,12 +31,12 @@ List down the contribution of each group members.
 
 For example:
 
-Lee Heng Yep
+### Lee Heng Yep
 
 1. Fixed gameboard creation.
 2. *add more*
 
-### Steve Rogers
+### Ong Kwang Zheng
 
 1. Zombie movement and attack behaviour.
 2. *add more*
