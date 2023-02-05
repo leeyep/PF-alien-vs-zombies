@@ -8,6 +8,13 @@
 // Phones: 018-870-3882 | 017-368-4493
 // ********************************************************* 
 
+//todo:
+//entities on board
+//show hp and atk of alien and zombies
+//movement
+//rotation of arrow
+//game over/you win
+//video of p2
 
 #include "helper.cpp"
 #include <iostream>
@@ -46,18 +53,18 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
     a:
     cout << "Number of rows (Odd numbers only) : ";
     cin >> numofrows;
-    if (numofrows < 1 || numofrows > 20)
+    if (numofrows < 1 || numofrows > 15)
     {
-        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        cout << "number is invalid, cannot be less than 1 or more than 15" << endl;
         goto a;
     }
 
     b:
     cout << "Number of columns (Odd numbers only) : ";
     cin >> numofcolumns;
-    if (numofcolumns < 1 || numofcolumns > 20)
+    if (numofcolumns < 1 || numofcolumns > 49)
     {
-        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        cout << "number is invalid, cannot be less than 1 or more than 39" << endl;
         goto b;
     }
 
@@ -69,7 +76,8 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
         cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
         goto c;
     }
-    pf::Pause;
+    pf::Pause();
+    pf::ClearScreen();
 }
 
 int row;
@@ -100,6 +108,7 @@ void Createboard(int row, int column)
         }
     }
 }
+
 void printBoard(int row, int column)
 {
     for (int rows = 0; rows < row; rows++)
@@ -124,20 +133,60 @@ void printBoard(int row, int column)
             {
                 cout << " ";
             }
+
         }
         cout << endl;
     }
 }
 
+/*void replace(int numofrows,int numofcolumns)
+{
+    for (int x = 0; x < numofcolumns; x++)
+    {
+        for (int y = 0; y < numofrows; y++)
+        {
+            if (x % 2 != 0 && y % 2 != 0 )
+            {
+                
+            }
+        }
+    }
+}*/
+
+class Alien
+{
+    public:
+    int HP = 100;
+    int ATK = 10;
+};
+
+class Zoms
+{
+    public:
+    int HP = 200;
+    int ATK = 30;
+};
+
+class Pods
+{
+    public:
+    int ATK = 30; //atk closest zombie
+};
+
+class Healthpack
+{
+    public:
+    int HP = 50; //adds hp to alien
+};
 
 
 int main()
 {
-    int Numbofrows;
-    int NumbofColumns;
-    int NumbofZombies;
+    int numofrows;
+    int numofColumns;
+    int numofZombies;
     
-    display_settingscreen(Numbofrows,NumbofColumns,NumbofZombies);
-    Createboard(Numbofrows, NumbofColumns);
-    printBoard(Numbofrows,NumbofColumns);
+    display_settingscreen(numofrows,numofColumns,numofZombies);
+    Createboard(numofrows, numofColumns);
+    printBoard(numofrows,numofColumns);
 }
