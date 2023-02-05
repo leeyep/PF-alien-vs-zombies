@@ -31,9 +31,9 @@ List down the contribution of each group members.
 
 For example:
 
-### Tony Stark
+Lee Heng Yep
 
-1. Randomly generate game board.
+1. Fixed gameboard creation.
 2. *add more*
 
 ### Steve Rogers
