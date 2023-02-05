@@ -9,8 +9,9 @@
 // ********************************************************* 
 
 
-#include "helper.h"
+#include "helper.cpp"
 #include <iostream>
+
 using namespace std;
 
 // void Gamesetting(int &selection)
@@ -39,25 +40,41 @@ using namespace std;
 //    cout << "Number of Columns:" << NumberofColumns << endl;
 //    cout << "Number of Zombies:" << NumberofZombies << endl;
 //} <-----------------------------------------------------------------------(DONT DELETE YET NOT CONFIRMED)
-int ClearScreen()
+
+void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
 {
-#if defined(_WIN32)
-    return std::system("cls");
-#elif defined(__linux__) || defined(__APPLE__)
-    return std::system("clear");
-#endif
-}
-int Pause()
+    a:
+    cout << "Number of rows (Odd numbers only) : ";
+    cin >> numofrows;
+    if (numofrows < 1 || numofrows > 20)
     {
-        #if defined(_WIN32)
-            return std::system("pause");
-        #elif defined(__linux__) || defined(__APPLE__)
-            return std::system(R"(read -p "Press any key to continue . . . " dummy)");
-        #endif
+        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        goto a;
     }
+
+    b:
+    cout << "Number of columns (Odd numbers only) : ";
+    cin >> numofcolumns;
+    if (numofcolumns < 1 || numofcolumns > 20)
+    {
+        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        goto b;
+    }
+
+    c:
+    cout << "Number of zombies : ";
+    cin >> numofzombies;
+    if (numofzombies < 1 || numofzombies > 10)
+    {
+        cout << "number is invalid, cannot be less than 1 or more than 10" << endl;
+        goto c;
+    }
+    pf::Pause;
+}
+
 int row;
 int column;
-char board[15][15];
+char board[30][30];
 void Createboard(int row, int column)
 {
     for (int rows = 0; rows < row; rows++)
@@ -76,7 +93,7 @@ void Createboard(int row, int column)
             {
                 board[rows][columns] = '|';
             }
-            else
+            else if (columns % 2 != 0)
             {
                 board[rows][columns] = ' ';
             }
@@ -91,45 +108,36 @@ void printBoard(int row, int column)
         {
             if (rows % 2 == 0 && columns % 2 == 0)
             {
-                std::cout << "+";
+                cout << "+";
             }
-            else if (rows % 2 == 0)
+            else if (rows % 2 == 0 && columns % 2 != 0)
             {
-                std::cout << "-";   
+                cout << "-";   
             }
             else if (columns % 2 == 0)
             {
-                std::cout << "|";
+                cout << "|";
                 if (columns == column - 1)
-                    std::cout << " ";
+                    cout << " ";
             }
-            else
+            else if (columns % 2 != 0 && rows % 2 != 0 )
             {
-                if (rows == 0)
-                {
-                    std::cout << "  ";
-                }
+                cout << " ";
             }
         }
         cout << endl;
     }
 }
+
+
+
 int main()
 {
     int Numbofrows;
     int NumbofColumns;
     int NumbofZombies;
-    cout << "Numbers of rows:(#only odd numbers)" << endl;
-    cin >> Numbofrows;
-    cout << "Number of columns: " << endl;
-    cin >> NumbofColumns;
-    cout << "Number of Zombies" << endl;
-    cin >> NumbofZombies;
-
-    cout << "Number of rows=" << Numbofrows << endl;
-    cout << "Number of Columns=" << NumbofColumns << endl;
-    cout << "Number of Zombies=" << NumbofZombies << endl;
-    cout << "Game setting has been updated"<< endl;
+    
+    display_settingscreen(Numbofrows,NumbofColumns,NumbofZombies);
     Createboard(Numbofrows, NumbofColumns);
     printBoard(Numbofrows,NumbofColumns);
 }
