@@ -1,20 +1,20 @@
-// ********************************************************* 
-// Course: TCP1101 PROGRAMMING FUNDAMENTALS 
-// Year: Trimester 1, 2022/23 (T2215) 
-// Lab: T13L 
+// *********************************************************
+// Course: TCP1101 PROGRAMMING FUNDAMENTALS
+// Year: Trimester 1, 2022/23 (T2215)
+// Lab: T13L
 // Names: LEE_HENG_YEP | ONG_KWANG_ZHENG
 // IDs: 1211101790| 1211102806
 // Emails: 1211101790@student.mmu.edu.my | 1211102806@student.mmu.edu.my
 // Phones: 018-870-3882 | 017-368-4493
-// ********************************************************* 
+// *********************************************************
 
-//todo:
-//entities on board
-//show hp and atk of alien and zombies
-//movement
-//rotation of arrow
-//game over/you win
-//video of p2
+// todo:
+// entities on board
+// show hp and atk of alien and zombies
+// movement
+// rotation of arrow
+// game over/you win
+// video of p2
 
 #include "helper.cpp"
 #include "command.cpp"
@@ -51,7 +51,7 @@ using namespace std;
 
 void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
 {
-    a:
+a:
     cout << "Number of rows (Odd numbers only) : ";
     cin >> numofrows;
     if (numofrows < 1 || numofrows > 15)
@@ -60,7 +60,7 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
         goto a;
     }
 
-    b:
+b:
     cout << "Number of columns (Odd numbers only) : ";
     cin >> numofcolumns;
     if (numofcolumns < 1 || numofcolumns > 49)
@@ -69,7 +69,7 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
         goto b;
     }
 
-    c:
+c:
     cout << "Number of zombies : ";
     cin >> numofzombies;
     if (numofzombies < 1 || numofzombies > 10)
@@ -122,7 +122,7 @@ void printBoard(int row, int column)
             }
             else if (rows % 2 == 0 && columns % 2 != 0)
             {
-                cout << "-";   
+                cout << "-";
             }
             else if (columns % 2 == 0)
             {
@@ -130,18 +130,17 @@ void printBoard(int row, int column)
                 if (columns == column - 1)
                     cout << " ";
             }
-            else if (columns % 2 != 0 && rows % 2 != 0 )
+            else if (columns % 2 != 0 && rows % 2 != 0)
             {
                 cout << " ";
             }
-
         }
         cout << endl;
     }
 }
 
 void quit()
-{   
+{
     string ans;
     cout << "Are you sure you want to quit? (Y/N) : ";
     cin >> ans;
@@ -152,12 +151,11 @@ void quit()
     }
     else if (ans == "N")
     {
-        
     }
 }
 
 void userinput(char x)
-{   
+{
     cout << "User input : ";
     cin >> x;
     x = toupper(x);
@@ -195,14 +193,12 @@ void userinput(char x)
         break;
     case 'R':
         // rotate arrow
-    break;
+        break;
 
     default:
         cout << "Invalid command, please refer to command list *H* for list of commands" << endl;
-    break;
+        break;
     }
-
-    
 }
 
 /*void replace(int numofrows,int numofcolumns) //replace spaces in board with shitz
@@ -213,7 +209,7 @@ void userinput(char x)
         for (int y = 0; y < numofrows; y++)
         {
             if (x % 2 != 0 && y % 2 != 0 )
-            { 
+            {
                 temp = board[x][y];
                 board[x][y] = x;
             }
@@ -223,30 +219,29 @@ void userinput(char x)
 
 class Alien
 {
-    public:
+public:
     int HP = 100;
     int ATK = 0;
 };
 
 class Zoms
 {
-    public:
+public:
     int HP = 200;
     int ATK = 30;
 };
 
 class Pods
 {
-    public:
-    int ATK = 10; //atk closest zombie
+public:
+    int ATK = 10; // atk closest zombie
 };
 
 class Healthpack
 {
-    public:
-    int HP = 20; //adds hp to alien
+public:
+    int HP = 20; // adds hp to alien
 };
-
 
 int main()
 {
@@ -254,10 +249,20 @@ int main()
     int numofColumns;
     int numofZombies;
     char x;
-    display_settingscreen(numofrows,numofColumns,numofZombies);
+    bool win = false;
+    display_settingscreen(numofrows, numofColumns, numofZombies);
     Createboard(numofrows, numofColumns);
-    printBoard(numofrows,numofColumns);
-    //replace(numofrows,numofColumns);
-    //after spawning entities
-    userinput(x);
+    printBoard(numofrows, numofColumns);
+
+    // after spawning entities
+    if (win = false)
+    {
+        userinput(x);
+    }
+    else if (win = true)
+    {
+        cout << "You Win!";
+        pf::Pause();
+        std::terminate();
+    }
 }
