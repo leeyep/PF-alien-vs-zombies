@@ -19,7 +19,7 @@
 #include "helper.cpp"
 #include "command.cpp"
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 // void Gamesetting(int &selection)
@@ -81,9 +81,9 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
     pf::ClearScreen();
 }
 
-int row;
-int column;
-char board[30][30];
+int const row = 30;
+int const column = 30;
+char board[row][column];
 void Createboard(int row, int column)
 {
     for (int rows = 0; rows < row; rows++)
@@ -140,6 +140,22 @@ void printBoard(int row, int column)
     }
 }
 
+void quit()
+{   
+    string ans;
+    cout << "Are you sure you want to quit? (Y/N) : ";
+    cin >> ans;
+    if (ans == "Y")
+    {
+        cout << "Thank you for playing" << endl;
+        std::terminate();
+    }
+    else if (ans == "N")
+    {
+        
+    }
+}
+
 void userinput(char x)
 {   
     cout << "User input : ";
@@ -175,7 +191,7 @@ void userinput(char x)
         // load
         break;
     case 'Q':
-        // quit
+        quit();
         break;
     case 'R':
         // rotate arrow
@@ -189,15 +205,17 @@ void userinput(char x)
     
 }
 
-/*void replace(int numofrows,int numofcolumns)
+/*void replace(int numofrows,int numofcolumns) //replace spaces in board with shitz
 {
+    string temp;
     for (int x = 0; x < numofcolumns; x++)
     {
         for (int y = 0; y < numofrows; y++)
         {
             if (x % 2 != 0 && y % 2 != 0 )
-            {
-                
+            { 
+                temp = board[x][y];
+                board[x][y] = x;
             }
         }
     }
@@ -207,7 +225,7 @@ class Alien
 {
     public:
     int HP = 100;
-    int ATK = 10;
+    int ATK = 0;
 };
 
 class Zoms
@@ -220,13 +238,13 @@ class Zoms
 class Pods
 {
     public:
-    int ATK = 30; //atk closest zombie
+    int ATK = 10; //atk closest zombie
 };
 
 class Healthpack
 {
     public:
-    int HP = 50; //adds hp to alien
+    int HP = 20; //adds hp to alien
 };
 
 
@@ -239,7 +257,7 @@ int main()
     display_settingscreen(numofrows,numofColumns,numofZombies);
     Createboard(numofrows, numofColumns);
     printBoard(numofrows,numofColumns);
-
+    //replace(numofrows,numofColumns);
     //after spawning entities
     userinput(x);
 }
