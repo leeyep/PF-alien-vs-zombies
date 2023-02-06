@@ -17,6 +17,7 @@
 //video of p2
 
 #include "helper.cpp"
+#include "command.cpp"
 #include <iostream>
 
 using namespace std;
@@ -139,6 +140,55 @@ void printBoard(int row, int column)
     }
 }
 
+void userinput(char x)
+{   
+    cout << "User input : ";
+    cin >> x;
+    x = toupper(x);
+    cout << endl;
+
+    switch (x)
+    {
+    case 'H':
+        help::main();
+        break;
+    case 'W':
+        cout << "Alien moves up" << endl;
+        // up movement
+        break;
+    case 'S':
+        cout << "Alien moves down" << endl;
+        // down
+        break;
+    case 'A':
+        cout << "Alien moves left" << endl;
+        // left
+        break;
+    case 'D':
+        cout << "Alien moves right" << endl;
+        // right
+        break;
+    case 'Z':
+        // save
+        break;
+    case 'X':
+        // load
+        break;
+    case 'Q':
+        // quit
+        break;
+    case 'R':
+        // rotate arrow
+    break;
+
+    default:
+        cout << "Invalid command, please refer to command list *H* for list of commands" << endl;
+    break;
+    }
+
+    
+}
+
 /*void replace(int numofrows,int numofcolumns)
 {
     for (int x = 0; x < numofcolumns; x++)
@@ -185,8 +235,11 @@ int main()
     int numofrows;
     int numofColumns;
     int numofZombies;
-    
+    char x;
     display_settingscreen(numofrows,numofColumns,numofZombies);
     Createboard(numofrows, numofColumns);
     printBoard(numofrows,numofColumns);
+
+    //after spawning entities
+    userinput(x);
 }
