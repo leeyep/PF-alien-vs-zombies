@@ -23,7 +23,7 @@
 using namespace std;
 char Board[50][50];
 
-void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
+void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies) //Author: Ong Kwang Zheng + Lee Heng Yep
 {
     cout << "Do You Wanna Change Your Game Setting? (1=Yes 2 = No) :";
     int temp;
@@ -64,7 +64,7 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
         cout << "Number of Zombies:" << numofzombies << endl;
     }
 }
-void createBoard(int row, int column)
+void createBoard(int row, int column) //Author: Ong Kwang Zheng
 {
 
     for (int rowcounter = 0; rowcounter < row; rowcounter++)
@@ -88,7 +88,7 @@ void createBoard(int row, int column)
     cout << "+" << endl;
 }
 
-void feature(int &numofrows, int &numofcolumns, int &numofzombies)
+void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: Ong Kwang Zheng
 {
     int random;
     int randomrows;
@@ -219,7 +219,7 @@ class Healthpack
 public:
     int HP = 20; // adds hp to alien
 };
-int main()
+int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
 {
     int numofrows = 3;
     int numofColumns = 5;
