@@ -34,7 +34,7 @@ For example:
 ### Lee Heng Yep
 
 1. Fixed gameboard creation.
-2. *add more*
+2. User input
 
 ### Ong Kwang Zheng
 
