@@ -19,11 +19,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "command.cpp"
+#include "helper.h"
 
 using namespace std;
 char Board[50][50];
 
-void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies) //Author: Ong Kwang Zheng + Lee Heng Yep
+void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies) // Author: Ong Kwang Zheng + Lee Heng Yep
 {
     cout << "Do You Wanna Change Your Game Setting? (1=Yes 2 = No) :";
     int temp;
@@ -64,7 +66,7 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
         cout << "Number of Zombies:" << numofzombies << endl;
     }
 }
-void createBoard(int row, int column) //Author: Ong Kwang Zheng
+void createBoard(int row, int column) // Author: Ong Kwang Zheng
 {
 
     for (int rowcounter = 0; rowcounter < row; rowcounter++)
@@ -147,58 +149,82 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
     createBoard(numofrows, numofcolumns);
 }
 
-// void userinput(char x)
-// {
-//     cout << "User input : ";
-//     cin >> x;
-//     x = toupper(x);
-//     cout << endl;
+void quit()
+{
+    string ans;
+    cout << "Are you sure you want to quit? (Y/N) : ";
+    cin >> ans;
+    if (ans == "Y")
+    {
+        cout << "Thank you for playing" << endl;
+        std::terminate();
+    }
+    else if (ans == "N")
+    {
+        
+    }
+}
 
-//     switch (x)
-//     {
-//     case 'Help':
-//         help::main();
-//         break;
-//     case 'Up':
-//         cout << "Alien moves up" << endl;
-//         // up movement
-//         break;
-//     case 'Down':
-//         cout << "Alien moves down" << endl;
-//         // down
-//         break;
-//     case 'Left':
-//         cout << "Alien moves left" << endl;
-//         // left
-//         break;
-//     case 'Right':
-//         cout << "Alien moves right" << endl;
-//         // right
-//         break;
-//     case 'SAve':
-//         // save
-//         break;
-//     case 'Load':
-//         // load
-//         break;
-//     case 'Quit':
-//         // quit
-//         break;
-//     case 'Arrow':
-//         // rotate arrow
-//         break;
+void alien_movement(string x)
+{
+    if(x == "W")
+    {
+        
+    }
+}
 
-//     default:
-//         cout << "Invalid command, please refer to command list *H* for list of commands" << endl;
-//         break;
-//     }
-// }
+void userinput(char x)
+{
+    cout << "User input : ";
+    cin >> x;
+    x = toupper(x);
+    cout << endl;
+
+    switch (x)
+    {
+    case 'H':
+        help::main();
+        break;
+    case 'W':
+        cout << "Alien moves up" << endl;
+        // up movement
+        break;
+    case 'S':
+        cout << "Alien moves down" << endl;
+        // down
+        break;
+    case 'A':
+        cout << "Alien moves left" << endl;
+        // left
+        break;
+    case 'D':
+        cout << "Alien moves right" << endl;
+        // right
+        break;
+    case 'Z':
+        // save
+        break;
+    case 'X':
+        // load
+        break;
+    case 'Q':
+        quit();
+        break;
+    case 'R':
+        // rotate arrow
+        break;
+
+    default:
+        cout << "Invalid command, please refer to command list *H* for list of commands" << endl;
+        break;
+    }
+}
 
 class Alien
 {
 public:
     int HP = 100;
-    int ATK = 10;
+    int ATK = 0;
 };
 
 class Zoms
@@ -219,6 +245,7 @@ class Healthpack
 public:
     int HP = 20; // adds hp to alien
 };
+
 int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
 {
     int numofrows = 3;
@@ -229,16 +256,5 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
     char x;
     display_settingscreen(numofrows, numofColumns, numofZombies);
     feature(numofrows, numofColumns, numofZombies);
-    // after spawning entities
-    // userinput(x);
-//     if (win = false)
-//     {
-//         userinput(x);
-//     }
-//     else if (win = true)
-//     {
-//         cout << "You Win!";
-//         pf::Pause();
-//         std::terminate();
-//     }
+    userinput(x);
 }
