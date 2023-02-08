@@ -19,46 +19,36 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "command.cpp"
-#include "helper.h"
+// #include "helper.h"
 
 using namespace std;
-
+char Board[50][50];
 class Alien
 {
 public:
     int HP = 100;
-    int ATK = 0;
+    int ATK = 100;
     int rowlocation;
     int columnlocation;
 };
-
 class Zoms
 {
 public:
-    int HP = 100 + rand() % 250;
-    int ATK = 20 + rand() % 40;
+    int HP = 100 + rand() % 150;
+    int ATK = 20 + rand() % 20;
+    int range = 1+ rand() % 2;
     int rowLocation;
     int columnLocation;
 };
 
-class Pods
-{
-public:
-    int ATK = 10; // atk closest zombie
-};
-
-class Healthpack
-{
-public:
-    int HP = 20; // adds hp to alien
-};
-
-char Board[50][50];
-
 void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies) // Author: Ong Kwang Zheng + Lee Heng Yep
 {
-    cout << "Do You Wanna Use Your Own Game Setting? (1=Yes 2 = No) :";
+    cout << "Do You Wanna Change Your Game Setting?" << endl;
+    cout << "Default Game settings:" << endl;
+    cout << "Number of rows:3" << endl;
+    cout << "Number of Columns:5" << endl;
+    cout << "Number of Zombie:1" << endl;
+    cout << "(1=Yes 2 = No):";
     int temp;
     cin >> temp;
     if (temp == 1)
@@ -99,7 +89,6 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
 }
 void createBoard(int row, int column) // Author: Ong Kwang Zheng
 {
-
     for (int rowcounter = 0; rowcounter < row; rowcounter++)
     {
         for (int columncounter = 0; columncounter < column; columncounter++)
@@ -120,12 +109,123 @@ void createBoard(int row, int column) // Author: Ong Kwang Zheng
     }
     cout << "+" << endl;
 }
+// void AlienMovement(int &numofrow, int &numofcolumns, string y)
+// {
+//     Alien alien;
+//     {
+
+//         if (y == "W")
+//         {
+//             Board[alien.rowlocation][alien.columnlocation] = '.';
+//             Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
+//             alien.rowlocation = alien.rowlocation - 1;
+//         }
+//         else if (y == "S")
+//         {
+//             Board[alien.rowlocation][alien.columnlocation] = '.';
+//             Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
+//             alien.rowlocation = alien.rowlocation + 1;
+//         }
+//         else if (y == "A")
+//         {
+//             Board[alien.rowlocation][alien.columnlocation] = '.';
+//             Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
+//             alien.columnlocation = alien.columnlocation - 1;
+//         }
+//         else if (y == "D")
+//         {
+//             Board[alien.rowlocation][alien.columnlocation] = '.';
+//             Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
+//             alien.columnlocation = alien.columnlocation + 1;
+//         }
+//     }
+//     createBoard(numofrow, numofcolumns);
+// }
+
+// movement need fix
+// find out why alien was replaced by zombie at feature()
+
+void ZombieMovement(int &numofrow, int &numofcolumns, Zoms zombie[], int zombieCounter) //Author:Ong Kwang Zheng
+{
+    srand(time(NULL));
+    int newposition;
+    bool movement = false;
+    for (int i = 0; i < zombieCounter; i++)
+    {   movement = false;   
+        while (movement == false)
+        { 
+        newposition = 1 + rand() % 3;
+            if (newposition == 1)
+            {
+                if (zombie[i].rowLocation - 1 >= 0 && Board[zombie[i].rowLocation-1][zombie[i].columnLocation] != 'A' && Board[zombie[i].rowLocation-1][zombie[i].columnLocation] != 'Z')
+                {
+                    Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
+                    Board[zombie[i].rowLocation - 1][zombie[i].columnLocation] = 'Z';
+                    zombie[i].rowLocation = zombie[i].rowLocation - 1;
+                    movement = true;
+                }
+            }
+
+            if (newposition == 2)
+            {
+                if (zombie[i].columnLocation + 1 < numofcolumns && Board[zombie[i].rowLocation][zombie[i].columnLocation+1] != 'A' && Board[zombie[i].rowLocation][zombie[i].columnLocation+1] != 'Z')
+                {
+
+                    Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
+                    Board[zombie[i].rowLocation][zombie[i].columnLocation + 1] = 'Z';
+                    zombie[i].columnLocation = zombie[i].columnLocation + 1;
+                    movement = true;
+                }
+            }
+            if (newposition == 3)
+            {
+                if(zombie[i].columnLocation - 1 >= 0 && Board[zombie[i].rowLocation][zombie[i].columnLocation-1] != 'A' && Board[zombie[i].rowLocation][zombie[i].columnLocation-1] != 'Z') 
+                {   
+                    Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
+                    Board[zombie[i].rowLocation][zombie[i].columnLocation - 1] = 'Z';
+                    zombie[i].columnLocation = zombie[i].columnLocation - 1;
+                    movement = true;
+                }
+            }
+            if (newposition == 4)
+            {
+                if(zombie[i].rowLocation + 1 < numofrow  && Board[zombie[i].rowLocation+1][zombie[i].columnLocation] != 'A' && Board[zombie[i].rowLocation+1][zombie[i].columnLocation] != 'Z')
+                {
+                    Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
+                    Board[zombie[i].rowLocation + 1][zombie[i].columnLocation] = 'Z';
+                    zombie[i].rowLocation = zombie[i].rowLocation +1;
+                    movement = true;
+                }
+            }
+        }
+    }
+    createBoard(numofrow, numofcolumns);
+    
+}
+
+int ClearScreen()
+{
+#if defined(_WIN32)
+    return std::system("cls");
+#elif defined(__linux__) || defined(__APPLE__)
+    return std::system("clear");
+#endif
+}
+
+int Pause()
+{
+#if defined(_WIN32)
+    return std::system("pause");
+#elif defined(__linux__) || defined(__APPLE__)
+    return std::system(R"(read -p "Press any key to continue . . . " dummy)");
+#endif
+}
 
 void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: Ong Kwang Zheng
 {
     Alien alien;
     Zoms zombie[numofzombies];
-    int zombieCounter=0;
+    int zombieCounter = 0;
     {
 
         int random;
@@ -174,137 +274,136 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
             }
         }
         Board[numofrows / 2][numofcolumns / 2] = 'A';
-        alien.rowlocation = numofrows/2;
-        alien.columnlocation = numofcolumns/2;
-
         for (int zombiecounter = 0; zombiecounter < numofzombies; zombiecounter++)
         {
             randomrows = rand() % numofrows;
             randomcolumns = rand() % numofcolumns;
-            if (Board[randomrows][randomcolumns] != 'A' || Board[randomrows][randomcolumns] != 'Z')
+            if (Board[randomrows][randomcolumns] != 'A' && Board[randomrows][randomcolumns] != 'Z')
             {
                 Board[randomrows][randomcolumns] = 'Z';
-                zombie[zombieCounter].rowLocation=randomrows;
-                zombie[zombieCounter].columnLocation=randomcolumns;
+                zombie[zombieCounter].rowLocation = randomrows;
+                zombie[zombieCounter].columnLocation = randomcolumns;
                 zombieCounter++;
             }
         }
         createBoard(numofrows, numofcolumns);
-        //ZombieMovement(numofrows, numofcolumns,zombie, zombieCounter);
-    }
-    cout << "Alien HP:" << alien.HP << "   " <<  "Alien ATK:" << alien.ATK << endl;
-    //cout << "Zombie1 HP:" << zombie.HP << "   " << "Zombie1 ATk:" << zombie.ATK << endl;
 
+
+    }
+    cout << "Alien HP:" << alien.HP << "   "
+         << "Alien ATK:" << alien.ATK << endl;
+    for (int zombiecounter = 0; zombiecounter < numofzombies; zombiecounter++)
+    {
+        cout << "Zombie" << zombiecounter + 1 << " "
+             << "HP:" << zombie[zombiecounter].HP << "   "
+             << "Zombie" << zombiecounter + 1 << " "
+             << "ATK:" << zombie[zombiecounter].ATK << "   "
+             << "Zombie" << zombiecounter + 1 << " "
+             << "Range:" << zombie[zombiecounter].range << endl;
+    }
+    // cout << "Zombie1 HP:" << zombie.HP << "   " << "Zombie1 ATk:" << zombie.ATK << endl;
 }
 
-void quit()
-{
-    string ans;
-    cout << "Are you sure you want to quit? (Y/N) : ";
-    cin >> ans;
-    if (ans == "Y")
-    {
-        cout << "Thank you for playing" << endl;
-        std::terminate();
-    }
-    else if (ans == "N")
-    {
-    }
-}
 
-void AlienMovement(int &numofrow, int &numofcolumns, string y)
+void userinput(int &numofrow, int &numofcolumns,Alien[])
 {
     Alien alien;
-    {
-
-        if (y == "W")
-        {
-            Board[alien.rowlocation][alien.columnlocation] = '.';
-            Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
-            alien.rowlocation = alien.rowlocation - 1;
-        }
-        else if (y == "S")
-        {
-            Board[alien.rowlocation][alien.columnlocation] = '.';
-            Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
-            alien.rowlocation = alien.rowlocation + 1;
-        }
-        else if (y == "A")
-        {
-            Board[alien.rowlocation][alien.columnlocation] = '.';
-            Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
-            alien.columnlocation = alien.columnlocation - 1;
-        }
-        else if (y == "D")
-        {
-            Board[alien.rowlocation][alien.columnlocation] = '.';
-            Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
-           alien.columnlocation = alien.columnlocation + 1;
-        }
-    }
-    createBoard(numofrow, numofcolumns);
-}
-
-void userinput(char x)
-{
+    int x;
     cout << "User input : ";
+    cout << "1=Help";
+    cout << "2=Up";
+    cout << "3=Left";
+    cout << "4=Down";
+    cout << "5=Right";
+    cout << "6=Arrow";
+    cout << "7=Save";
+    cout << "8=Load";
+    cout << "9=Quit";
     cin >> x;
-    x = toupper(x);
-    cout << endl;
-
-    switch (x)
+    if (x == 1)
     {
-    case 'H':
-        help::main();
-        break;
-    case 'W':
-        cout << "Alien moves up" << endl;
-        break;
-    case 'S':
-        cout << "Alien moves down" << endl;
-        // down
-        break;
-    case 'A':
-        cout << "Alien moves left" << endl;
-        // left
-        break;
-    case 'D':
-        cout << "Alien moves right" << endl;
-        // right
-        break;
-    case 'Z':
-        // save
-        break;
-    case 'X':
-        // load
-        break;
-    case 'Q':
-        quit();
-        break;
-    case 'R':
-        // rotate arrow
-        break;
+        std::string commands[] = {"Up", "Down", "Left", "Right", "Arrow", "Help", "Save", "Load", "Quit"};
+        std::string descriptions[] = {"Command Alien to move up", "Command Alien to move down", "Command Alien to move left", "Command Alien to move right", "Rotate arrow clockwise", "Show Command that can be used in game", "Save The Current Game Progession", "Load Saved Game Progession", "Quit Current Game"};
 
-    default:
-        cout << "Invalid command, please refer to command list *H* for list of commands" << endl;
-        break;
+        std::cout << "Game Help List:" << std::endl;
+        for (int i = 0; i < sizeof(commands) / sizeof(commands[0]); i++)
+        {
+            std::cout << commands[i] << ": " << descriptions[i] << std::endl;
+        }
+    }
+    else if (x == 2)
+    {
+        Board[alien.rowlocation][alien.columnlocation] = '.';
+        Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
+        alien.rowlocation = alien.rowlocation - 1;
+    }
+    else if (x == 3)
+    {
+        Board[alien.rowlocation][alien.columnlocation] = '.';
+        Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
+        alien.rowlocation = alien.rowlocation + 1;
+    }
+    else if (x == 4)
+    {
+        Board[alien.rowlocation][alien.columnlocation] = '.';
+        Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
+        alien.columnlocation = alien.columnlocation - 1;
+    }
+    else if (x == 5)
+    {
+        Board[alien.rowlocation][alien.columnlocation] = '.';
+        Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
+        alien.columnlocation = alien.columnlocation + 1;
+    }
+    else if (x == 9)
+    {
+        {
+            string ans;
+            cout << "Are you sure you want to quit? (Y/N) : ";
+            cin >> ans;
+            if (ans == "Y")
+            {
+                cout << "Thank you for playing" << endl;
+                std::terminate();
+            }
+            else if (ans == "N")
+            {
+            }
+        }
     }
 }
+class Pods
+{
+public:
+    int ATK = 10; // atk closest zombie
+};
 
-
+class Healthpack
+{
+public:
+    int HP = 20; // adds hp to alien
+};
 int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
 {
     int numofrows = 3;
     int numofColumns = 5;
     int numofZombies = 1;
+    int numofcolumns;
     int selection;
-    int alienhp;
 
     char x;
-    string y;
-    y = x;
     display_settingscreen(numofrows, numofColumns, numofZombies);
     feature(numofrows, numofColumns, numofZombies);
-    userinput(x);
-    AlienMovement(numofrows, numofColumns, y); // tbc
+    // after spawning entities
+    // userinput(x);
+    //     if (win = false)
+    //     {
+    //         userinput(x);
+    //     }
+    //     else if (win = true)
+    //     {
+    //         cout << "You Win!";
+    //         pf::Pause();
+    //         std::terminate();
+    //     }
 }
