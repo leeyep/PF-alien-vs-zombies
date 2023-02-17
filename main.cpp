@@ -19,9 +19,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <cstring>
 // #include "helper.h"
 
 using namespace std;
+char rockfeature();
 char Board[50][50];
 class Alien
 {
@@ -36,7 +38,7 @@ class Zoms
 public:
     int HP = 100 + rand() % 150;
     int ATK = 20 + rand() % 20;
-    int range = 1+ rand() % 2;
+    int range = 1 + rand() % 2;
     int rowLocation;
     int columnLocation;
 };
@@ -51,6 +53,18 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
     cout << "(1=Yes 2 = No):";
     int temp;
     cin >> temp;
+    while (temp != 1 && temp != 2)
+    {
+        cout << "Invalid Option!" << endl;
+        cout << "===============" << endl;
+        cout << "Do You Wanna Change Your Game Setting?" << endl;
+        cout << "Default Game settings:" << endl;
+        cout << "Number of rows:3" << endl;
+        cout << "Number of Columns:5" << endl;
+        cout << "Number of Zombie:1" << endl;
+        cout << "(1=Yes 2 = No):";
+        cin >> temp;
+    }
     if (temp == 1)
     {
         cout << "Number of rows (Odd numbers only) : ";
@@ -109,55 +123,21 @@ void createBoard(int row, int column) // Author: Ong Kwang Zheng
     }
     cout << "+" << endl;
 }
-// void AlienMovement(int &numofrow, int &numofcolumns, string y)
-// {
-//     Alien alien;
-//     {
 
-//         if (y == "W")
-//         {
-//             Board[alien.rowlocation][alien.columnlocation] = '.';
-//             Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
-//             alien.rowlocation = alien.rowlocation - 1;
-//         }
-//         else if (y == "S")
-//         {
-//             Board[alien.rowlocation][alien.columnlocation] = '.';
-//             Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
-//             alien.rowlocation = alien.rowlocation + 1;
-//         }
-//         else if (y == "A")
-//         {
-//             Board[alien.rowlocation][alien.columnlocation] = '.';
-//             Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
-//             alien.columnlocation = alien.columnlocation - 1;
-//         }
-//         else if (y == "D")
-//         {
-//             Board[alien.rowlocation][alien.columnlocation] = '.';
-//             Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
-//             alien.columnlocation = alien.columnlocation + 1;
-//         }
-//     }
-//     createBoard(numofrow, numofcolumns);
-// }
-
-// movement need fix
-// find out why alien was replaced by zombie at feature()
-
-void ZombieMovement(int &numofrow, int &numofcolumns, Zoms zombie[], int zombieCounter) //Author:Ong Kwang Zheng
+void ZombieMovement(int &numofrow, int &numofcolumns, Zoms zombie[], int zombieCounter) // Author:Ong Kwang Zheng
 {
     srand(time(NULL));
     int newposition;
     bool movement = false;
     for (int i = 0; i < zombieCounter; i++)
-    {   movement = false;   
+    {
+        movement = false;
         while (movement == false)
-        { 
-        newposition = 1 + rand() % 3;
+        {
+            newposition = 1 + rand() % 3;
             if (newposition == 1)
             {
-                if (zombie[i].rowLocation - 1 >= 0 && Board[zombie[i].rowLocation-1][zombie[i].columnLocation] != 'A' && Board[zombie[i].rowLocation-1][zombie[i].columnLocation] != 'Z')
+                if (zombie[i].rowLocation - 1 >= 0 && Board[zombie[i].rowLocation - 1][zombie[i].columnLocation] != 'A' && Board[zombie[i].rowLocation - 1][zombie[i].columnLocation] != 'Z')
                 {
                     Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
                     Board[zombie[i].rowLocation - 1][zombie[i].columnLocation] = 'Z';
@@ -168,7 +148,7 @@ void ZombieMovement(int &numofrow, int &numofcolumns, Zoms zombie[], int zombieC
 
             if (newposition == 2)
             {
-                if (zombie[i].columnLocation + 1 < numofcolumns && Board[zombie[i].rowLocation][zombie[i].columnLocation+1] != 'A' && Board[zombie[i].rowLocation][zombie[i].columnLocation+1] != 'Z')
+                if (zombie[i].columnLocation + 1 < numofcolumns && Board[zombie[i].rowLocation][zombie[i].columnLocation + 1] != 'A' && Board[zombie[i].rowLocation][zombie[i].columnLocation + 1] != 'Z')
                 {
 
                     Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
@@ -179,8 +159,8 @@ void ZombieMovement(int &numofrow, int &numofcolumns, Zoms zombie[], int zombieC
             }
             if (newposition == 3)
             {
-                if(zombie[i].columnLocation - 1 >= 0 && Board[zombie[i].rowLocation][zombie[i].columnLocation-1] != 'A' && Board[zombie[i].rowLocation][zombie[i].columnLocation-1] != 'Z') 
-                {   
+                if (zombie[i].columnLocation - 1 >= 0 && Board[zombie[i].rowLocation][zombie[i].columnLocation - 1] != 'A' && Board[zombie[i].rowLocation][zombie[i].columnLocation - 1] != 'Z')
+                {
                     Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
                     Board[zombie[i].rowLocation][zombie[i].columnLocation - 1] = 'Z';
                     zombie[i].columnLocation = zombie[i].columnLocation - 1;
@@ -189,20 +169,104 @@ void ZombieMovement(int &numofrow, int &numofcolumns, Zoms zombie[], int zombieC
             }
             if (newposition == 4)
             {
-                if(zombie[i].rowLocation + 1 < numofrow  && Board[zombie[i].rowLocation+1][zombie[i].columnLocation] != 'A' && Board[zombie[i].rowLocation+1][zombie[i].columnLocation] != 'Z')
+                if (zombie[i].rowLocation + 1 < numofrow && Board[zombie[i].rowLocation + 1][zombie[i].columnLocation] != 'A' && Board[zombie[i].rowLocation + 1][zombie[i].columnLocation] != 'Z')
                 {
                     Board[zombie[i].rowLocation][zombie[i].columnLocation] = ' ';
                     Board[zombie[i].rowLocation + 1][zombie[i].columnLocation] = 'Z';
-                    zombie[i].rowLocation = zombie[i].rowLocation +1;
+                    zombie[i].rowLocation = zombie[i].rowLocation + 1;
                     movement = true;
                 }
             }
         }
     }
     createBoard(numofrow, numofcolumns);
-    
 }
+void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng + Lee Heng Yep
+{
+    Alien alien;
+    alien.rowlocation = numofrow / 2;
+    alien.columnlocation = numofcolumns / 2;
+    cout << "=============" << endl;
+    cout << "|| 1=Up    ||" << endl;
+    cout << "|| 2=Down  ||" << endl;
+    cout << "|| 3=Left  ||" << endl;
+    cout << "|| 4=Right ||" << endl;
+    cout << "=============" << endl;
+    cout << "Your Option? :";
+    int y;
+    cin >> y;
+    while (y < 1 || y > 4)
+    {
+        cout << "Invalid Command!" << endl;
+        cout << "===============-" << endl;
+        cout << "=============" << endl;
+        cout << "|| 1=Up    ||" << endl;
+        cout << "|| 2=Down  ||" << endl;
+        cout << "|| 3=Left  ||" << endl;
+        cout << "|| 4=Right ||" << endl;
+        cout << "=============" << endl;
+        cout << "Your Option? :";
+        cin >> y;
+    }
 
+    if (y == 1 && alien.rowlocation - 1 >= 0)
+    {
+        if (Board[alien.rowlocation - 1][alien.columnlocation] != 'r')
+        {
+            Board[alien.rowlocation][alien.columnlocation] = ' ';
+            Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
+            alien.rowlocation = alien.rowlocation - 1;
+        }
+        else
+        {
+            alien.rowlocation = alien.rowlocation;
+            Board[alien.rowlocation - 1][alien.columnlocation] = rockfeature();
+        }
+    }
+    if (y == 2 && alien.rowlocation + 1 < numofrow)
+    {
+        if (Board[alien.rowlocation + 1][alien.columnlocation] != 'r')
+        {
+            Board[alien.rowlocation][alien.columnlocation] = ' ';
+            Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
+            alien.rowlocation = alien.rowlocation + 1;
+        }
+        else
+        {
+            alien.rowlocation = alien.rowlocation;
+            Board[alien.rowlocation + 1][alien.columnlocation] = rockfeature();
+        }
+    }
+    if (y == 3 && alien.columnlocation - 1 >= 0)
+    {
+        if (Board[alien.rowlocation][alien.columnlocation - 1] != 'r')
+        {
+            Board[alien.rowlocation][alien.columnlocation] = ' ';
+            Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
+            alien.columnlocation = alien.columnlocation - 1;
+        }
+        else
+        {
+            alien.columnlocation = alien.columnlocation;
+            Board[alien.columnlocation][alien.columnlocation - 1] = rockfeature();
+        }
+    }
+    if (y == 4 && alien.columnlocation + 1 >= 0)
+    {
+        if (Board[alien.rowlocation - 1][alien.columnlocation + 1] != 'r')
+        {
+            Board[alien.rowlocation][alien.columnlocation] = ' ';
+            Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
+            alien.columnlocation = alien.columnlocation + 1;
+        }
+        else
+        {
+            alien.columnlocation = alien.columnlocation;
+            Board[alien.columnlocation][alien.columnlocation + 1] = rockfeature();
+        }
+    }
+    createBoard(numofrow, numofcolumns);
+}
 int ClearScreen()
 {
 #if defined(_WIN32)
@@ -227,12 +291,10 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
     Zoms zombie[numofzombies];
     int zombieCounter = 0;
     {
-
-        int random;
         int randomrows;
         int randomcolumns;
         int newposition;
-
+        int random;
         srand(time(NULL));
         for (int rowcounter = 0; rowcounter < numofrows; rowcounter++)
         {
@@ -287,8 +349,6 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
             }
         }
         createBoard(numofrows, numofcolumns);
-
-
     }
     cout << "Alien HP:" << alien.HP << "   "
          << "Alien ATK:" << alien.ATK << endl;
@@ -301,25 +361,39 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
              << "Zombie" << zombiecounter + 1 << " "
              << "Range:" << zombie[zombiecounter].range << endl;
     }
+ //ZombieMovement(numofrows,numofcolumns,zombie,zombieCounter);// was testing something
+
     // cout << "Zombie1 HP:" << zombie.HP << "   " << "Zombie1 ATk:" << zombie.ATK << endl;
 }
 
-
-void userinput(int &numofrow, int &numofcolumns,Alien[])
+void userinput(int &numofrow, int &numofcolumns, Alien &alien)
 {
-    Alien alien;
     int x;
+    cout << "=====================" << endl;
+    cout << "||1=Help           ||" << endl;
+    cout << "||2=Alien Movement ||" << endl;
+    cout << "||3=Arrow          ||" << endl;
+    cout << "||4=Save           ||" << endl;
+    cout << "||5=Load           ||" << endl;
+    cout << "||6=Quit           ||" << endl;
+    cout << "=====================" << endl;
     cout << "User input : ";
-    cout << "1=Help";
-    cout << "2=Up";
-    cout << "3=Left";
-    cout << "4=Down";
-    cout << "5=Right";
-    cout << "6=Arrow";
-    cout << "7=Save";
-    cout << "8=Load";
-    cout << "9=Quit";
     cin >> x;
+    while (x < 1 || x > 6)
+    {
+        cout << "Invalid Input!" << endl;
+        cout << "==============" << endl;
+        cout << "=====================" << endl;
+        cout << "||1=Help           ||" << endl;
+        cout << "||2=Alien Movement ||" << endl;
+        cout << "||3=Arrow          ||" << endl;
+        cout << "||4=Save           ||" << endl;
+        cout << "||5=Load           ||" << endl;
+        cout << "||6=Quit           ||" << endl;
+        cout << "=====================" << endl;
+        cout << "User input : ";
+        cin >> x;
+    }
     if (x == 1)
     {
         std::string commands[] = {"Up", "Down", "Left", "Right", "Arrow", "Help", "Save", "Load", "Quit"};
@@ -333,45 +407,45 @@ void userinput(int &numofrow, int &numofcolumns,Alien[])
     }
     else if (x == 2)
     {
-        Board[alien.rowlocation][alien.columnlocation] = '.';
-        Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
-        alien.rowlocation = alien.rowlocation - 1;
+        alienmovement(numofrow, numofcolumns);
     }
-    else if (x == 3)
+}
+/*
+else if (x == 3)
+{
+    Board[alien.rowlocation][alien.columnlocation] = '.';
+    Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
+    alien.rowlocation = alien.rowlocation + 1;
+}
+else if (x == 4)
+{
+    Board[alien.rowlocation][alien.columnlocation] = '.';
+    Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
+    alien.columnlocation = alien.columnlocation - 1;
+}
+else if (x == 5)
+{
+    Board[alien.rowlocation][alien.columnlocation] = '.';
+    Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
+    alien.columnlocation = alien.columnlocation + 1;
+}
+else if (x == 9)
+{
     {
-        Board[alien.rowlocation][alien.columnlocation] = '.';
-        Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
-        alien.rowlocation = alien.rowlocation + 1;
-    }
-    else if (x == 4)
-    {
-        Board[alien.rowlocation][alien.columnlocation] = '.';
-        Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
-        alien.columnlocation = alien.columnlocation - 1;
-    }
-    else if (x == 5)
-    {
-        Board[alien.rowlocation][alien.columnlocation] = '.';
-        Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
-        alien.columnlocation = alien.columnlocation + 1;
-    }
-    else if (x == 9)
-    {
+        string ans;
+        cout << "Are you sure you want to quit? (Y/N) : ";
+        cin >> ans;
+        if (ans == "Y")
         {
-            string ans;
-            cout << "Are you sure you want to quit? (Y/N) : ";
-            cin >> ans;
-            if (ans == "Y")
-            {
-                cout << "Thank you for playing" << endl;
-                std::terminate();
-            }
-            else if (ans == "N")
-            {
-            }
+            cout << "Thank you for playing" << endl;
+            std::terminate();
+        }
+        else if (ans == "N")
+        {
         }
     }
 }
+}*/
 class Pods
 {
 public:
@@ -390,20 +464,56 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
     int numofZombies = 1;
     int numofcolumns;
     int selection;
+    int zombieCounter;
+    Zoms zombie;
+    Alien alien;
 
     char x;
     display_settingscreen(numofrows, numofColumns, numofZombies);
     feature(numofrows, numofColumns, numofZombies);
+    userinput(numofrows, numofColumns, alien);
     // after spawning entities
     // userinput(x);
     //     if (win = false)
     //     {
     //         userinput(x);
-    //     }
+    //     {
     //     else if (win = true)
     //     {
     //         cout << "You Win!";
     //         pf::Pause();
     //         std::terminate();
     //     }
+}
+char rockfeature()
+{
+    int random = rand() % 70;
+    if (random < 10)
+    {
+        return 'p';
+    }
+    else if (random < 20)
+    {
+        return 'h';
+    }
+    else if (random < 30)
+    {
+        return '^';
+    }
+    else if (random < 40)
+    {
+        return 'v';
+    }
+    else if (random < 50)
+    {
+        return '<';
+    }
+    else if (random < 60)
+    {
+        return '>';
+    }
+    else if (random < 70)
+    {
+        return ' ';
+    }
 }
