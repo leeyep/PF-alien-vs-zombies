@@ -20,9 +20,27 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
-// #include "helper.h"
 
 using namespace std;
+
+int ClearScreen()
+{
+#if defined(_WIN32)
+    return std::system("cls");
+#elif defined(__linux__) || defined(__APPLE__)
+    return std::system("clear");
+#endif
+}
+
+int Pause()
+{
+#if defined(_WIN32)
+    return std::system("pause");
+#elif defined(__linux__) || defined(__APPLE__)
+    return std::system(R"(read -p "Press any key to continue . . . " dummy)");
+#endif
+}
+
 char rockfeature();
 char Board[50][50];
 class Alien
@@ -45,6 +63,8 @@ public:
 
 void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies) // Author: Ong Kwang Zheng + Lee Heng Yep
 {
+    cout << "ALIEN VS ZOMBIE" << endl;
+    Pause();
     cout << "Do You Wanna Change Your Game Setting?" << endl;
     cout << "Default Game settings:" << endl;
     cout << "Number of rows:3" << endl;
@@ -101,7 +121,7 @@ void display_settingscreen(int &numofrows, int &numofcolumns, int &numofzombies)
         cout << "Number of Zombies:" << numofzombies << endl;
     }
 }
-void createBoard(int row, int column) // Author: Ong Kwang Zheng
+void createBoard(int row, int column) // Author: Ong Kwang Zheng + Lee Heng Yep
 {
     for (int rowcounter = 0; rowcounter < row; rowcounter++)
     {
@@ -209,81 +229,154 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
         cin >> y;
     }
 
-    if (y == 1 && alien.rowlocation - 1 >= 0)
+    bool stop = false;
+    
+    if (y == 1) // Up ^
     {
-        if (Board[alien.rowlocation - 1][alien.columnlocation] != 'r')
+        do
         {
-            Board[alien.rowlocation][alien.columnlocation] = ' ';
-            Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
-            alien.rowlocation = alien.rowlocation - 1;
-        }
-        else
-        {
-            alien.rowlocation = alien.rowlocation;
-            Board[alien.rowlocation - 1][alien.columnlocation] = rockfeature();
-        }
+            if (Board[alien.rowlocation - 1][alien.columnlocation] != 'r')
+            {
+                if (alien.rowlocation > 0)
+                {
+                    Board[alien.rowlocation][alien.columnlocation] = '.';
+                    Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
+                    alien.rowlocation = alien.rowlocation - 1;
+                    if (Board[alien.rowlocation - 1][alien.columnlocation] == 'h') // hp
+                    {
+                        alien.HP += 20;
+                    }
+                    else if (Board[alien.rowlocation - 1][alien.columnlocation] == 'p') // pod
+                    {
+                        
+                    }
+                    else if (Board[alien.rowlocation - 1][alien.columnlocation] == '^' || Board[alien.rowlocation - 1][alien.columnlocation] == 'v' || Board[alien.rowlocation - 1][alien.columnlocation] == '<' || Board[alien.rowlocation - 1][alien.columnlocation] == '>')
+                    {
+                        alien.ATK += 10;
+                    }
+                }
+                else if (alien.rowlocation <= 0)
+                {
+                    alien.rowlocation = alien.rowlocation;
+                    stop = true;
+                }
+            }
+            else if (Board[alien.rowlocation - 1][alien.columnlocation] == 'r')
+            {
+                alien.rowlocation = alien.rowlocation;
+                Board[alien.rowlocation - 1][alien.columnlocation] = rockfeature();
+                stop = true;
+            }
+            else if (Board[alien.rowlocation - 1][alien.columnlocation] == '-')
+            {
+                alien.rowlocation = alien.rowlocation;
+                stop = true;
+            }
+            else
+            {
+                stop = true;
+            }
+        } while (stop == false);
     }
-    if (y == 2 && alien.rowlocation + 1 < numofrow)
+
+    if (y == 2) // Down v
     {
-        if (Board[alien.rowlocation + 1][alien.columnlocation] != 'r')
+        do
         {
-            Board[alien.rowlocation][alien.columnlocation] = ' ';
-            Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
-            alien.rowlocation = alien.rowlocation + 1;
-        }
-        else
-        {
-            alien.rowlocation = alien.rowlocation;
-            Board[alien.rowlocation + 1][alien.columnlocation] = rockfeature();
-        }
+            if (Board[alien.rowlocation + 1][alien.columnlocation] != 'r')
+            {
+                if (alien.rowlocation + 1 < numofrow)
+                {
+                    Board[alien.rowlocation][alien.columnlocation] = '.';
+                    Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
+                    alien.rowlocation = alien.rowlocation + 1;
+                }
+                else
+                {
+                    stop = true;
+                }
+            }
+            else if (Board[alien.rowlocation + 1][alien.columnlocation] == 'r')
+            {
+                alien.rowlocation = alien.rowlocation;
+                Board[alien.rowlocation - 1][alien.columnlocation] = rockfeature();
+                stop = true;
+            }
+            else
+            {
+                stop = true;
+            }
+        } while (stop == false);
     }
-    if (y == 3 && alien.columnlocation - 1 >= 0)
+
+    if (y == 3) // Left <--
     {
-        if (Board[alien.rowlocation][alien.columnlocation - 1] != 'r')
+        do
         {
-            Board[alien.rowlocation][alien.columnlocation] = ' ';
-            Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
-            alien.columnlocation = alien.columnlocation - 1;
-        }
-        else
-        {
-            alien.columnlocation = alien.columnlocation;
-            Board[alien.columnlocation][alien.columnlocation - 1] = rockfeature();
-        }
+            if (Board[alien.rowlocation][alien.columnlocation - 1] != 'r')
+            {
+                if (alien.columnlocation - 1 >= 0)
+                {
+                    Board[alien.rowlocation][alien.columnlocation] = '.';
+                    Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
+                    alien.columnlocation = alien.columnlocation - 1;
+                }
+                else
+                {
+                    stop = true;
+                }
+            }
+            else if (Board[alien.rowlocation][alien.columnlocation - 1] == 'r')
+            {
+                alien.columnlocation = alien.columnlocation;
+                Board[alien.rowlocation][alien.columnlocation - 1] = rockfeature();
+                stop = true;
+            }
+            else if (Board[alien.rowlocation][alien.columnlocation - 1] == '|')
+            {
+                alien.columnlocation = alien.columnlocation;
+                stop = true;
+            }
+            else
+            {
+                stop = true;
+            }
+        } while (stop == false);
     }
-    if (y == 4 && alien.columnlocation + 1 >= 0)
+
+    if (y == 4) // Right -->
     {
-        if (Board[alien.rowlocation - 1][alien.columnlocation + 1] != 'r')
+        do
         {
-            Board[alien.rowlocation][alien.columnlocation] = ' ';
-            Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
-            alien.columnlocation = alien.columnlocation + 1;
-        }
-        else
-        {
-            alien.columnlocation = alien.columnlocation;
-            Board[alien.columnlocation][alien.columnlocation + 1] = rockfeature();
-        }
+            if (Board[alien.rowlocation - 1][alien.columnlocation + 1] != 'r')
+            {
+                if (alien.columnlocation + 1 < numofcolumns)
+                {
+                    Board[alien.rowlocation][alien.columnlocation] = '.';
+                    Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
+                    alien.columnlocation = alien.columnlocation + 1;
+                }
+                else
+                {
+                    stop = true;
+                }
+            }
+            else if (Board[alien.rowlocation][alien.columnlocation + 1] == 'r')
+            {
+                alien.columnlocation = alien.columnlocation;
+                Board[alien.rowlocation][alien.columnlocation + 1] = rockfeature();
+                stop = true;
+            }
+            else if (Board[alien.rowlocation][alien.columnlocation + 1] == '|')
+            {
+                alien.columnlocation = alien.columnlocation;
+                stop = true;
+            }
+        } while (stop == false);
     }
     createBoard(numofrow, numofcolumns);
 }
-int ClearScreen()
-{
-#if defined(_WIN32)
-    return std::system("cls");
-#elif defined(__linux__) || defined(__APPLE__)
-    return std::system("clear");
-#endif
-}
 
-int Pause()
-{
-#if defined(_WIN32)
-    return std::system("pause");
-#elif defined(__linux__) || defined(__APPLE__)
-    return std::system(R"(read -p "Press any key to continue . . . " dummy)");
-#endif
-}
 
 void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: Ong Kwang Zheng
 {
@@ -325,7 +418,7 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
                 {
                     Board[rowcounter][columncounter] = '>';
                 }
-                else if (random < 80)
+                else if (random < 70)
                 {
                     Board[rowcounter][columncounter] = 'r';
                 }
@@ -361,7 +454,7 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
              << "Zombie" << zombiecounter + 1 << " "
              << "Range:" << zombie[zombiecounter].range << endl;
     }
- //ZombieMovement(numofrows,numofcolumns,zombie,zombieCounter);// was testing something
+    // ZombieMovement(numofrows,numofcolumns,zombie,zombieCounter);// was testing something
 
     // cout << "Zombie1 HP:" << zombie.HP << "   " << "Zombie1 ATk:" << zombie.ATK << endl;
 }
@@ -410,70 +503,7 @@ void userinput(int &numofrow, int &numofcolumns, Alien &alien)
         alienmovement(numofrow, numofcolumns);
     }
 }
-/*
-else if (x == 3)
-{
-    Board[alien.rowlocation][alien.columnlocation] = '.';
-    Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
-    alien.rowlocation = alien.rowlocation + 1;
-}
-else if (x == 4)
-{
-    Board[alien.rowlocation][alien.columnlocation] = '.';
-    Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
-    alien.columnlocation = alien.columnlocation - 1;
-}
-else if (x == 5)
-{
-    Board[alien.rowlocation][alien.columnlocation] = '.';
-    Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
-    alien.columnlocation = alien.columnlocation + 1;
-}
-else if (x == 9)
-{
-    {
-        string ans;
-        cout << "Are you sure you want to quit? (Y/N) : ";
-        cin >> ans;
-        if (ans == "Y")
-        {
-            cout << "Thank you for playing" << endl;
-            std::terminate();
-        }
-        else if (ans == "N")
-        {
-        }
-    }
-}
-}*/
-class Pods
-{
-public:
-    int ATK = 10; // atk closest zombie
-};
 
-class Healthpack
-{
-public:
-    int HP = 20; // adds hp to alien
-};
-int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
-{
-    int numofrows = 3;
-    int numofColumns = 5;
-    int numofZombies = 1;
-    int numofcolumns;
-    int selection;
-    int zombieCounter;
-    Zoms zombie;
-    Alien alien;
-
-    char x;
-    display_settingscreen(numofrows, numofColumns, numofZombies);
-    feature(numofrows, numofColumns, numofZombies);
-    userinput(numofrows, numofColumns, alien);
-
-}
 char rockfeature()
 {
     int random = rand() % 70;
@@ -505,4 +535,42 @@ char rockfeature()
     {
         return ' ';
     }
+    return 0;
 }
+
+class Pods
+{
+public:
+    int ATK = 10; // atk closest zombie
+};
+
+class Healthpack
+{
+public:
+    int HP = 20; // adds hp to alien
+};
+int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
+{
+    int numofrows = 3;
+    int numofColumns = 5;
+    int numofZombies = 1;
+    int numofcolumns;
+    int selection;
+    int zombieCounter;
+    Zoms zombie;
+    Alien alien;
+    char x;
+    bool win = false;
+    bool lose = false;
+
+    display_settingscreen(numofrows, numofColumns, numofZombies);
+    feature(numofrows, numofColumns, numofZombies);
+    do
+    // {
+        userinput(numofrows, numofColumns, alien);
+    // } while (win == false || lose == false);
+    
+    // zombiemovement
+    // end
+}
+
