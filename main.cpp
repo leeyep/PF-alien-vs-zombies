@@ -472,18 +472,7 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
     display_settingscreen(numofrows, numofColumns, numofZombies);
     feature(numofrows, numofColumns, numofZombies);
     userinput(numofrows, numofColumns, alien);
-    // after spawning entities
-    // userinput(x);
-    //     if (win = false)
-    //     {
-    //         userinput(x);
-    //     {
-    //     else if (win = true)
-    //     {
-    //         cout << "You Win!";
-    //         pf::Pause();
-    //         std::terminate();
-    //     }
+
 }
 char rockfeature()
 {

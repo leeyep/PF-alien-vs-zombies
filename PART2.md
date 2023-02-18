@@ -35,6 +35,9 @@ For example:
 
 1. Fixed gameboard creation.
 2. User input
+3. Alien movement
+
+
 
 ### Ong Kwang Zheng
 
