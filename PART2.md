@@ -18,11 +18,6 @@ List all the features completed.
 6. Allow Zombie to move in random direction with 1 step after alien's movement without going over the border or replace another zombie and alien.
 7. Allow user to change the direction of arrow in the gameboard.
 8. Rockfeature() - Randomfeature after breaking rock or replacing the trail after alien's movement
-### To Do
-
-List all the features not yet done. Remove this section if there is no incomplete requirements.
-1. 
-2. *add more*
 
 ## Additional Features
 
@@ -49,7 +44,7 @@ For example:
 
 ### Ong Kwang Zheng
 1. User's opinion if wanted to change default setting- display_settingscreen()
-2. Genearating GameBoard with user's input value or default value setting -Createboard()
+2. Generating GameBoard with user's input value or default value setting -Createboard()
 3. Input feature in gameboard(Alien,Zombie,Pod,Rock,Arrow, Health pcak , Alien's stat and zombie's stat) -feature()
 4. User's option -userinput()
 5. Zombie movement-ZombieMovement()
