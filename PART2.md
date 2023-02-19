@@ -53,7 +53,7 @@ For example:
 8. Attribute of Alien -class Alien
 9. Attribute of Zombie -class zoms
 10. Command List
-
+11. User Manual and Game Introduction
 
 
 ## Problems Encountered & Solutions
