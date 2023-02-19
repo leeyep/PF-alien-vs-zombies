@@ -39,7 +39,7 @@ class Alien
 {
 public:
     int HP=100;
-    int ATK=100;
+    int ATK=0;
     int rowlocation;
     int columnlocation;
 };
