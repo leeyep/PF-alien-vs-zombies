@@ -8,14 +8,6 @@
 // Phones: 018-870-3882 | 017-368-4493
 // *********************************************************
 
-// todo:
-// entities on board
-// show hp and atk of alien and zombies
-// movement
-// rotation of arrow
-// game over/you win
-// video of p2
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -46,8 +38,8 @@ char Board[50][50];
 class Alien
 {
 public:
-    int HP;
-    int ATK;
+    int HP=100;
+    int ATK=100;
     int rowlocation;
     int columnlocation;
 };
@@ -230,10 +222,10 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
     }
 
     bool stop = false;
-    
+
     if (y == 1) // Up ^
     {
-        u:
+    u:
         do
         {
             if (Board[alien.rowlocation - 1][alien.columnlocation] != 'r')
@@ -248,9 +240,9 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                     {
                         if (Board[alien.rowlocation - 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation + 1] == 'Z' ||
                             Board[alien.rowlocation][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation][alien.columnlocation + 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation + 1] == 'Z')
-                            {
-                                // not done yet, unable to select zombies
-                            }
+                        {
+                            // not done yet, unable to select zombies
+                        }
                     }
                     else if (Board[alien.rowlocation - 1][alien.columnlocation] == '^' || Board[alien.rowlocation - 1][alien.columnlocation] == 'v' || Board[alien.rowlocation - 1][alien.columnlocation] == '<' || Board[alien.rowlocation - 1][alien.columnlocation] == '>')
                     {
@@ -275,7 +267,6 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                             Board[alien.rowlocation][alien.columnlocation] = Board[alien.rowlocation - 1][alien.columnlocation];
                             goto r;
                         }
-
                     }
                     Board[alien.rowlocation][alien.columnlocation] = '.';
                     Board[alien.rowlocation - 1][alien.columnlocation] = 'A';
@@ -307,7 +298,7 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
 
     if (y == 2) // Down v
     {
-        d:
+    d:
         do
         {
             if (Board[alien.rowlocation + 1][alien.columnlocation] != 'r')
@@ -322,9 +313,9 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                     {
                         if (Board[alien.rowlocation - 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation + 1] == 'Z' ||
                             Board[alien.rowlocation][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation][alien.columnlocation + 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation + 1] == 'Z')
-                            {
-                                // not done yet, unable to select zombies
-                            }
+                        {
+                            // not done yet, unable to select zombies
+                        }
                     }
                     else if (Board[alien.rowlocation + 1][alien.columnlocation] == '^' || Board[alien.rowlocation + 1][alien.columnlocation] == 'v' || Board[alien.rowlocation + 1][alien.columnlocation] == '<' || Board[alien.rowlocation + 1][alien.columnlocation] == '>')
                     {
@@ -349,7 +340,6 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                             Board[alien.rowlocation][alien.columnlocation] = Board[alien.rowlocation + 1][alien.columnlocation];
                             goto r;
                         }
-
                     }
                     Board[alien.rowlocation][alien.columnlocation] = '.';
                     Board[alien.rowlocation + 1][alien.columnlocation] = 'A';
@@ -375,7 +365,7 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
 
     if (y == 3) // Left <--
     {
-        l:
+    l:
         do
         {
             if (Board[alien.rowlocation][alien.columnlocation - 1] != 'r')
@@ -390,9 +380,9 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                     {
                         if (Board[alien.rowlocation - 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation + 1] == 'Z' ||
                             Board[alien.rowlocation][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation][alien.columnlocation + 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation + 1] == 'Z')
-                            {
-                                // not done yet, unable to select zombies
-                            }
+                        {
+                            // not done yet, unable to select zombies
+                        }
                     }
                     else if (Board[alien.rowlocation][alien.columnlocation - 1] == '^' || Board[alien.rowlocation][alien.columnlocation - 1] == 'v' || Board[alien.rowlocation][alien.columnlocation - 1] == '<' || Board[alien.rowlocation][alien.columnlocation - 1] == '>')
                     {
@@ -417,7 +407,6 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                             Board[alien.rowlocation][alien.columnlocation] = Board[alien.rowlocation][alien.columnlocation - 1];
                             goto r;
                         }
-
                     }
                     Board[alien.rowlocation][alien.columnlocation] = '.';
                     Board[alien.rowlocation][alien.columnlocation - 1] = 'A';
@@ -433,7 +422,6 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                 alien.columnlocation = alien.columnlocation;
                 Board[alien.rowlocation][alien.columnlocation - 1] = rockfeature();
                 stop = true;
-                
             }
             else if (Board[alien.rowlocation][alien.columnlocation - 1] == '|')
             {
@@ -449,7 +437,7 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
 
     if (y == 4) // Right -->
     {
-        r:
+    r:
         do
         {
             if (Board[alien.rowlocation - 1][alien.columnlocation + 1] != 'r')
@@ -464,9 +452,9 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                     {
                         if (Board[alien.rowlocation - 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation - 1][alien.columnlocation + 1] == 'Z' ||
                             Board[alien.rowlocation][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation][alien.columnlocation + 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation - 1] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation] == 'Z' || Board[alien.rowlocation + 1][alien.columnlocation + 1] == 'Z')
-                            {
-                                // not done yet, unable to select zombies
-                            }
+                        {
+                            // not done yet, unable to select zombies
+                        }
                     }
                     else if (Board[alien.rowlocation][alien.columnlocation + 1] == '^' || Board[alien.rowlocation][alien.columnlocation + 1] == 'v' || Board[alien.rowlocation][alien.columnlocation + 1] == '<' || Board[alien.rowlocation][alien.columnlocation + 1] == '>')
                     {
@@ -491,13 +479,11 @@ void alienmovement(int &numofrow, int &numofcolumns) // Author :Ong Kwang Zheng 
                             Board[alien.rowlocation][alien.columnlocation] = Board[alien.rowlocation][alien.columnlocation + 1];
                             goto r;
                         }
-
                     }
-                
+
                     Board[alien.rowlocation][alien.columnlocation] = '.';
                     Board[alien.rowlocation][alien.columnlocation + 1] = 'A';
                     alien.columnlocation = alien.columnlocation + 1;
-
                 }
                 else
                 {
@@ -628,9 +614,11 @@ void feature(int &numofrows, int &numofcolumns, int &numofzombies) // Author: On
     // cout << "Zombie1 HP:" << zombie.HP << "   " << "Zombie1 ATk:" << zombie.ATK << endl;
 }
 
-void userinput(int &numofrow, int &numofcolumns, Alien &alien)
+void userinput(int &numofrow, int &numofcolumns, Alien &alien,int &numofzombies)
 {
     int x;
+    Zoms zombie[numofzombies];
+    int zombieCounter = 0;
     cout << "=====================" << endl;
     cout << "||1=Help           ||" << endl;
     cout << "||2=Alien Movement ||" << endl;
@@ -670,6 +658,9 @@ void userinput(int &numofrow, int &numofcolumns, Alien &alien)
     else if (x == 2)
     {
         alienmovement(numofrow, numofcolumns);
+        cout << "Zombie move"<<endl;
+        cout << "VVVVVVVVVVV" << endl;
+        ZombieMovement(numofrow,numofcolumns,zombie,zombieCounter);
     }
     else if (x == 3)
     {
@@ -683,7 +674,6 @@ void userinput(int &numofrow, int &numofcolumns, Alien &alien)
     cout << "Alien HP:" << alien.HP << "   "
          << "Alien ATK:" << alien.ATK << endl;
 }
-
 
 char rockfeature()
 {
@@ -750,7 +740,7 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
     feature(numofrows, numofColumns, numofZombies);
     do
     {
-        userinput(numofrows, numofColumns, alien);
+        userinput(numofrows, numofColumns, alien,numofZombies);
         draw += 1;
         Pause();
         ClearScreen();
@@ -770,4 +760,3 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
         }
     } while (gg == false && draw <= 100);
 }
- 
