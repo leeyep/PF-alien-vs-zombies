@@ -16,7 +16,8 @@ g++ main.cpp folder1\code.cpp folder2\code.cpp ......
 ## User Manual
 
 
-1.Start the game by running the program.
+1.Start the game by running the program. 
+
 2.First of all , you are required to select if u wanna change the default game setting.
 3.Next,the game board will be displayed with the Alien 'A', Rock 'r' , Health Pack 'h',Pod 'p' and Zombie 'Z' represented by their respective letters according to the value that you had input before this.
 4.User may use the following commands to move the Alien (Command List will be provided by inputting 1 in your option later)
