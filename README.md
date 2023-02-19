@@ -1,7 +1,7 @@
 # Alien vs. Zombie
 This game is a puzzle game, where players must guide cute alien creatures through various obstacles to reach their destination.Players must strategically plan the movements of their alien creatures to avoid hazards such as traps and enemy creatures. As players progress through the levels, they can collect new alien creatures with unique abilities that can help them overcome the challenges they encounter.Unfortunately, this game is now still a single player game which make you unavailable to co-op missions with your friends.
 
-Please provide the YouTube link to your [Video Demo]([https://youtube.com](https://youtu.be/Q3Yul_aT9Vg)).
+Please provide the YouTube link to your [Video Demo](https://youtu.be/Q3Yul_aT9Vg).
 
 ## Compilation Instructions
 
