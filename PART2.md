@@ -59,7 +59,7 @@ For example:
 ## Problems Encountered & Solutions
 
 Describe the problems encountered and provide the solutions / plan for the solutions.
-1. Unable to pass the value of zombie's attribute so alienmovement is not completed. (Tried to use vector for zombie class but failed to generate)
-2. Unable to insert location value into alien class, so location keeps resetting into default. (tried using functions, functions in class, inserting value in main - all doesnt work)
-3. Unable to create game over screen because zombie cannot be targeted nor killed and alien cannot be damaged(implemented draw)
-4. alien info not updating
+1. Unable to pass the value of zombie's attribute to other function. (Tried to use vector for zombie class but failed to generate)
+3. Unable to insert location value into alien class, so location keeps resetting into default. (tried using functions, functions in class, inserting value in main - all doesnt work)
+4. Unable to create game over screen because zombie cannot be targeted nor killed and alien cannot be damaged(implemented draw)
+5. alien info not updating
