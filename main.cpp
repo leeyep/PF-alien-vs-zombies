@@ -14,7 +14,7 @@
 #include <cstring>
 
 using namespace std;
-
+bool gameisrunning = true;
 int ClearScreen()
 {
 #if defined(_WIN32)
@@ -732,13 +732,12 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
     Alien alien;
     char x;
     int draw;
-    bool gg;
     alien.HP = 100;
     alien.ATK = 0;
 
     display_settingscreen(numofrows, numofColumns, numofZombies);
     feature(numofrows, numofColumns, numofZombies);
-    do
+    while (gameisrunning)
     {
         userinput(numofrows, numofColumns, alien,numofZombies);
         draw += 1;
@@ -746,17 +745,17 @@ int main() // Authors: Ong Kwang Zheng + Lee Heng Yep
         ClearScreen();
         if (alien.HP == 0)
         {
-            gg = true;
+            gameisrunning= true;
             cout << "You lose!" << endl;
         }
         else if (zombieCounter == 0)
         {
-            gg = true;
+            gameisrunning= true;
             cout << "You win!" << endl;
         }
         else if (draw >= 100) // failsafe
         {
             cout << "Draw!" << endl;
         }
-    } while (gg == false && draw <= 100);
+    }
 }
